@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Survei Ruang Kerja, Struktur, Kolaborasi & Pembelajaran | MBA UGM Kelompok 4</title>
+<meta name="description" content="Survei anonim ±5 menit tentang ruang kerja, struktur organisasi, budaya kerja, kolaborasi, dan pembelajaran di tempat kerja. Tugas MBA UGM Kelompok 4.">
+<meta property="og:title" content="Ekosistem kerjamu masuk kuadran mana?">
+<meta property="og:description" content="Survei anonim ±5 menit. Ringkasan jawaban langsung keluar dalam matriks 2x2.">
+<meta name="theme-color" content="#0f3d3e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f7f4; --card:#ffffff; --ink:#14201f; --muted:#5b6b69; --line:#e2e7e4;
+    --brand:#0f3d3e; --brand-2:#1f7a6d; --accent:#f2a541; --soft:#e8f3f0;
+    --danger:#b42318; --ok:#127a4c;
+    --q1:#1f7a6d; --q2:#3b6fb6; --q3:#c9822b; --q4:#9a4a4a;
+    --radius:16px; --shadow:0 1px 2px rgba(16,24,40,.05),0 4px 16px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  button{font-family:inherit}
+  .wrap{max-width:640px;margin:0 auto;padding:16px 16px 96px}
+  /* progress */
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(246,247,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-in{max-width:640px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+  .brandmark{font-weight:800;font-size:13px;color:var(--brand);white-space:nowrap}
+  .progress{flex:1;height:8px;background:#dfe6e3;border-radius:99px;overflow:hidden}
+  .progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand-2),var(--accent));border-radius:99px;transition:width .4s ease}
+  .pct{font-size:12px;font-weight:700;color:var(--muted);min-width:34px;text-align:right}
+  /* views */
+  .view{display:none;animation:fade .35s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .badge{display:inline-flex;gap:6px;align-items:center;background:var(--soft);color:var(--brand);font-weight:700;font-size:12.5px;padding:7px 12px;border-radius:99px;margin-top:12px}
+  h1{font-size:clamp(26px,6.4vw,36px);line-height:1.18;margin:16px 0 10px;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--brand-2)}
+  h2{font-size:22px;line-height:1.25;margin:8px 0 6px;letter-spacing:-.01em}
+  h3{font-size:16px;margin:0 0 8px}
+  .lead{color:var(--muted);font-size:16px;margin:0 0 18px}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;box-shadow:var(--shadow)}
+  .metric b{display:block;font-size:22px;color:var(--brand);letter-spacing:-.02em}
+  .metric span{font-size:12px;color:var(--muted);font-weight:600}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin:14px 0}
+  .defs dl{margin:0}
+  .defs dt{font-weight:800;color:var(--brand);margin-top:12px;font-size:14.5px}
+  .defs dt:first-child{margin-top:0}
+  .defs dd{margin:2px 0 0;color:var(--ink);font-size:14.5px}
+  .ethics ul{margin:0;padding-left:18px}
+  .ethics li{margin:6px 0;font-size:14.5px}
+  .step-label{font-size:12.5px;font-weight:800;color:var(--brand-2);text-transform:uppercase;letter-spacing:.06em}
+  .hint{color:var(--muted);font-size:14px;margin:0 0 6px}
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:15px 20px;font-weight:800;font-size:16px;cursor:pointer;transition:transform .08s ease,background .2s;text-decoration:none}
+  .btn:active{transform:scale(.98)}
+  .btn-primary{background:var(--brand);color:#fff;width:100%}
+  .btn-primary:hover{background:#0b2f30}
+  .btn-ghost{background:transparent;color:var(--brand);border:1.5px solid var(--line)}
+  .btn-wa{background:#1fa855;color:#fff;width:100%}
+  .btn-sm{padding:10px 14px;font-size:14px;border-radius:10px}
+  .navbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  .navbar-in{max-width:640px;margin:0 auto;display:flex;gap:10px}
+  .navbar .btn-ghost{flex:0 0 auto}
+  .navbar .btn-primary{flex:1}
+  /* question blocks */
+  .q{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:16px;margin:12px 0;transition:border-color .2s,box-shadow .2s}
+  .q.missing{border-color:var(--danger);box-shadow:0 0 0 3px rgba(180,35,24,.08)}
+  .q.done{border-color:#bfe0d7}
+  .q-title{font-weight:700;font-size:15.5px;margin:0 0 12px}
+  .q-num{display:inline-block;min-width:26px;color:var(--brand-2);font-weight:800}
+  .group-head{margin:22px 0 4px;font-weight:800;color:var(--brand);font-size:15px;display:flex;align-items:center;gap:8px}
+  .group-head::before{content:"";width:6px;height:18px;border-radius:3px;background:var(--accent)}
+  .opts{display:grid;gap:8px}
+  .opt{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;background:#fff;font-size:15px;transition:all .15s}
+  .opt:hover{border-color:#a9cfc5}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt .dot{flex:0 0 18px;height:18px;margin-top:2px;border-radius:50%;border:2px solid #9fb1ad;position:relative}
+  .opt.sel{border-color:var(--brand-2);background:var(--soft)}
+  .opt.sel .dot{border-color:var(--brand-2)}
+  .opt.sel .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--brand-2)}
+  .opt small{display:block;color:var(--muted);font-size:13px}
+  /* likert */
+  .likert{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .lk{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:12px 0;font-weight:800;font-size:17px;color:var(--ink);cursor:pointer;transition:all .15s}
+  .lk:hover{border-color:#a9cfc5}
+  .lk.sel{background:var(--brand-2);border-color:var(--brand-2);color:#fff;transform:translateY(-1px)}
+  .lk-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px;font-weight:600}
+  .scale-legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12.5px;color:var(--muted);background:var(--soft);border-radius:12px;padding:10px 12px;margin:10px 0 4px}
+  .scale-legend b{color:var(--brand)}
+  textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radius:12px;padding:12px;font-family:inherit;font-size:15px;resize:vertical}
+  textarea:focus{outline:none;border-color:var(--brand-2)}
+  .counter{text-align:right;font-size:12px;color:var(--muted)}
+  .errbox{display:none;background:#fdecea;color:var(--danger);border-radius:12px;padding:10px 12px;font-weight:600;font-size:14px;margin:10px 0}
+  .errbox.show{display:block}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  /* result */
+  .zone-chip{display:inline-block;padding:6px 12px;border-radius:99px;color:#fff;font-weight:800;font-size:13px}
+  .matrix-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:10px;box-shadow:var(--shadow);margin:14px 0}
+  svg text{font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+  .scores{display:grid;gap:10px}
+  .bar-row{display:grid;grid-template-columns:1fr 46px;gap:6px 10px;align-items:center;font-size:14px}
+  .bar-row .lbl{font-weight:700;grid-column:1/3;display:flex;justify-content:space-between}
+  .bar{height:10px;background:#e7ecea;border-radius:99px;overflow:hidden;grid-column:1/3}
+  .bar>span{display:block;height:100%;border-radius:99px;background:var(--brand-2);width:0;transition:width .8s ease}
+  .insight{background:#fff8ec;border:1px solid #f4dcb2;border-radius:14px;padding:14px;font-size:14.5px}
+  .testmode{background:#eef4ff;border:1px dashed #8aa9de;border-radius:14px;padding:14px;font-size:14px}
+  .testmode .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:all .3s;z-index:50;pointer-events:none;max-width:90vw;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .center{text-align:center}
+  .muted{color:var(--muted)}
+  .footer{font-size:12.5px;color:var(--muted);text-align:center;margin-top:28px}
+  .spinner{width:18px;height:18px;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (min-width:560px){ .wrap{padding-top:24px} }
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brandmark">MBA UGM · G4</div>
+    <div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
+    <div class="pct" id="progressPct">0%</div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <!-- ===================== LANDING ===================== -->
+  <section class="view active" id="view-landing" data-progress="0">
+    <span class="badge">🔒 Survei anonim · ±5 menit · Tugas MBA UGM Kelompok 4</span>
+    <h1>Kuesioner Survei Ruang Kerja, Struktur Organisasi, <em>Kolaborasi, dan Pembelajaran</em></h1>
+    <p class="lead">Survei ini bertujuan memperoleh gambaran mengenai persepsi pekerja terhadap desain ruang kerja, struktur organisasi, budaya kerja, kolaborasi, dukungan inovasi, dan praktik pembelajaran di organisasi.</p>
+
+    <div class="metrics">
+      <div class="metric"><b>±5</b><span>menit</span></div>
+      <div class="metric"><b>0</b><span>nama &amp; email</span></div>
+      <div class="metric"><b>22</b><span>pertanyaan</span></div>
+    </div>
+
+    <div class="card defs">
+      <h3>Petunjuk dan definisi</h3>
+      <dl>
+        <dt>Office Design</dt>
+        <dd>Bentuk dan tata letak ruang kerja, termasuk ruang terbuka, kubikel, ruang tertutup, maupun ruang kerja virtual.</dd>
+        <dt>Struktur Organisasi</dt>
+        <dd>Cara organisasi membagi tugas, menetapkan wewenang, mengambil keputusan, dan mengoordinasikan pekerjaan.</dd>
+        <dt>Learning Organization</dt>
+        <dd>Organisasi yang mendorong berbagi pengetahuan, belajar dari pengalaman/kegagalan, dan menyimpan pengetahuan agar dapat digunakan kembali.</dd>
+      </dl>
+      <p class="hint" style="margin:14px 0 0">Jawablah berdasarkan kondisi organisasi/tempat kerja Anda <b>saat ini</b>, bukan kondisi yang menurut Anda ideal. Jika bekerja sepenuhnya remote, maknai ruang kerja sebagai lingkungan kerja virtual.</p>
+    </div>
+
+    <div class="card ethics">
+      <h3>Etika dan anonimitas</h3>
+      <p style="margin:0;font-size:14.5px">Partisipasi bersifat sukarela dan Anda dapat berhenti kapan saja. Survei tidak meminta nama, alamat email, nomor telepon, atau nama organisasi. Data digunakan untuk kepentingan akademik dan dilaporkan secara agregat.</p>
+    </div>
+
+    <button class="btn btn-primary" data-go="screen" style="margin-top:8px">Mulai Survei →</button>
+    <p class="footer">Mini Research Leadership &amp; Organizational Behavior · Kelompok 4 · MBA Universitas Gadjah Mada</p>
+  </section>
+
+  <!-- ===================== BAGIAN 0: SCREENING ===================== -->
+  <section class="view" id="view-screen" data-progress="6">
+    <div class="step-label">Bagian 0 · Pertanyaan Screening</div>
+    <h2>Sebelum mulai, satu pertanyaan dulu</h2>
+    <div class="q" data-qid="screening" data-type="radio">
+      <p class="q-title"><span class="q-num">0.</span> Apakah saat ini Anda bekerja di sebuah organisasi, perusahaan, atau instansi?</p>
+      <div class="opts" data-name="screening">
+        <label class="opt"><input type="radio" name="screening" value="Ya"><span class="dot"></span><span>Ya, sedang bekerja<small>Termasuk pegawai tetap, kontrak, PNS/ASN, atau magang aktif di organisasi.</small></span></label>
+        <label class="opt"><input type="radio" name="screening" value="Tidak"><span class="dot"></span><span>Tidak / mahasiswa penuh waktu tanpa pengalaman kerja / bekerja sepenuhnya sendiri tanpa tim</span></label>
+      </div>
+    </div>
+    <div class="errbox" id="err-screen">Silakan pilih salah satu jawaban.</div>
+  </section>
+
+  <!-- ===================== SCREEN-OUT ===================== -->
+  <section class="view" id="view-screenout" data-progress="100">
+    <div class="center" style="font-size:52px;margin-top:20px">🙏</div>
+    <h2 class="center">Terima kasih sudah mampir!</h2>
+    <p class="lead center">Survei ini khusus untuk responden yang sedang bekerja di sebuah organisasi, jadi Anda tidak perlu melanjutkan survei. Anda tetap bisa membantu kami dengan membagikan survei ini ke rekan, keluarga, atau grup kantor.</p>
+    <button class="btn btn-wa" data-action="share-wa">Bagikan ke Rekan Kerja via WhatsApp</button>
+    <button class="btn btn-ghost" data-action="copy-link" style="width:100%;margin-top:10px">Salin Link Survei</button>
+    <p class="footer">Kelompok 4 · MBA Universitas Gadjah Mada</p>
+  </section>
+
+  <!-- ===================== BAGIAN 1: PROFIL ===================== -->
+  <section class="view" id="view-s1" data-progress="20">
+    <div class="step-label">Bagian 1 dari 4 · Profil dan Konteks Kerja</div>
+    <h2>Ceritakan sedikit tentang tempat kerja Anda</h2>
+    <p class="hint">Pilih satu jawaban yang paling sesuai.</p>
+    <div id="s1-questions"></div>
+    <div class="errbox" id="err-s1">Masih ada pertanyaan yang belum dijawab. Yang belum terisi ditandai merah.</div>
+  </section>
+
+  <!-- ===================== BAGIAN 2: RUANG & STRUKTUR ===================== -->
+  <section class="view" id="view-s2" data-progress="45">
+    <div class="step-label">Bagian 2 dari 4 · Ruang Kerja dan Struktur Organisasi</div>
+    <h2>Seberapa setuju Anda dengan pernyataan berikut?</h2>
+    <p class="hint">Nilai kondisi tempat kerja Anda <b>saat ini</b>, bukan kondisi ideal. Jika Anda sepenuhnya remote, maknai ruang kerja sebagai lingkungan kerja virtual.</p>
+    <div class="scale-legend"><span><b>1</b> Sangat Tidak Setuju</span><span><b>2</b> Tidak Setuju</span><span><b>3</b> Netral</span><span><b>4</b> Setuju</span><span><b>5</b> Sangat Setuju</span></div>
+    <div id="s2-questions"></div>
+    <div class="errbox" id="err-s2">Masih ada pernyataan yang belum dinilai. Yang belum terisi ditandai merah.</div>
+  </section>
+
+  <!-- ===================== BAGIAN 3: KOLABORASI, BUDAYA, PEMBELAJARAN ===================== -->
+  <section class="view" id="view-s3" data-progress="70">
+    <div class="step-label">Bagian 3 dari 4 · Kolaborasi, Budaya Kerja, dan Pembelajaran</div>
+    <h2>Bagaimana tim Anda bekerja sama dan belajar?</h2>
+    <p class="hint">Masih sama: nilai kondisi <b>saat ini</b>.</p>
+    <div class="scale-legend"><span><b>1</b> Sangat Tidak Setuju</span><span><b>2</b> Tidak Setuju</span><span><b>3</b> Netral</span><span><b>4</b> Setuju</span><span><b>5</b> Sangat Setuju</span></div>
+    <div id="s3-questions"></div>
+    <div class="errbox" id="err-s3">Masih ada pernyataan yang belum dinilai. Yang belum terisi ditandai merah.</div>
+  </section>
+
+  <!-- ===================== BAGIAN 4: REFLEKSI ===================== -->
+  <section class="view" id="view-s4" data-progress="88">
+    <div class="step-label">Bagian 4 dari 4 · Refleksi</div>
+    <h2>Dua pertanyaan terakhir</h2>
+    <div class="q" data-qid="tebakan" data-type="radio">
+      <p class="q-title"><span class="q-num">21.</span> Menurut Anda, faktor mana yang paling menghambat inovasi di tempat kerja?</p>
+      <div class="opts" data-name="tebakan">
+        <label class="opt"><input type="radio" name="tebakan" value="Hambatan ruang kerja"><span class="dot"></span><span>Hambatan ruang kerja<small>Sulit bertemu tim lain atau terlalu bising untuk fokus.</small></span></label>
+        <label class="opt"><input type="radio" name="tebakan" value="Hambatan struktur/birokrasi"><span class="dot"></span><span>Hambatan struktur/birokrasi<small>Persetujuan berlapis, koordinasi harus melalui atasan, atau divisi bekerja sendiri-sendiri.</small></span></label>
+        <label class="opt"><input type="radio" name="tebakan" value="Budaya takut salah"><span class="dot"></span><span>Budaya takut salah<small>Karyawan enggan mencoba hal baru atau membahas kegagalan karena takut disalahkan.</small></span></label>
+        <label class="opt"><input type="radio" name="tebakan" value="Kurangnya dukungan/sumber daya"><span class="dot"></span><span>Kurangnya dukungan/sumber daya<small>Waktu, anggaran, teknologi, atau dukungan pimpinan.</small></span></label>
+        <label class="opt"><input type="radio" name="tebakan" value="Lainnya"><span class="dot"></span><span>Lainnya</span></label>
+      </div>
+      <input type="text" id="tebakanLain" maxlength="150" placeholder="Sebutkan hambatan lainnya" style="display:none;width:100%;margin-top:10px;border:1.5px solid var(--line);border-radius:12px;padding:12px;font-family:inherit;font-size:15px">
+    </div>
+    <div class="q" data-qid="C1" data-type="text" data-optional="1">
+      <p class="q-title"><span class="q-num">22.</span> Apa hambatan terbesar yang membuat kerja sama atau berbagi pengetahuan antar-tim di tempat kerja Anda menjadi sulit? <span class="muted">(opsional, maksimal 600 karakter)</span></p>
+      <textarea id="C1" maxlength="600" placeholder="Contoh: rapat lintas divisi harus menunggu disposisi pimpinan, jadi masalah kecil bisa makan waktu seminggu."></textarea>
+      <div class="counter"><span id="c1count">0</span>/600</div>
+    </div>
+    <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website" tabindex="-1" autocomplete="off"></label></div>
+    <div class="errbox" id="err-s4">Silakan pilih jawaban nomor 21. Jika memilih "Lainnya", tuliskan hambatannya.</div>
+  </section>
+
+  <!-- ===================== HASIL ===================== -->
+  <section class="view" id="view-result" data-progress="100">
+    <div class="step-label">Ringkasan Jawaban Anda</div>
+    <h2 id="resTitle">Posisi Anda</h2>
+    <span class="zone-chip" id="resChip">Zona</span>
+    <p class="lead" id="resDesc" style="margin-top:12px"></p>
+
+    <div class="card" style="background:#f3f6f5">
+      <p style="margin:0;font-size:14px" class="muted">Hasil ini adalah <b>gambaran deskriptif</b> berdasarkan skor dimensi dari jawaban Anda. Skor yang lebih tinggi menunjukkan persepsi yang lebih positif terhadap aspek yang diukur. Hasil ini <b>bukan penilaian kinerja individu</b> dan <b>bukan diagnosis organisasi</b>.</p>
+    </div>
+
+    <div class="card">
+      <h3>Skor per dimensi (skala 1-5)</h3>
+      <div class="scores" id="scoreBars"></div>
+    </div>
+
+    <div class="matrix-wrap"><div id="matrix"></div></div>
+
+    <div class="card">
+      <h3>Cara membaca matriks 2x2</h3>
+      <ul style="margin:0;padding-left:18px;font-size:14px">
+        <li><b>Sumbu X (Ruang &amp; Struktur)</b> = rata-rata butir 6-12: Office Design (6-8) dan Struktur Organisasi (9-12).</li>
+        <li><b>Sumbu Y (Kolaborasi &amp; Pembelajaran)</b> = rata-rata butir 13-15 dan 18-20: Kolaborasi (13-15) dan Learning Organization (18-20).</li>
+        <li><b>Alasan penggabungan:</b> dalam Organizing Framework Kinicki &amp; Fugate (Bab 15), lingkungan fisik dan struktur adalah faktor situasi (input). Kolaborasi dan pembelajaran organisasi adalah proses yang dipengaruhi input tersebut.</li>
+        <li>Butir 16-17 (Budaya Kerja dan Dukungan Inovasi) <b>tidak</b> dimasukkan ke sumbu karena merupakan indikator tunggal yang bersifat eksploratif. Skornya tetap ditampilkan di atas.</li>
+        <li>Garis tengah ada di skor <span id="cutLbl">3.0</span> (Netral). Posisi pada matriks menggambarkan persepsi pada satu waktu dan <b>tidak menunjukkan hubungan sebab-akibat</b>.</li>
+      </ul>
+    </div>
+
+    <div class="insight" id="insightBox"></div>
+
+    <div class="card">
+      <h3>Bantu kami menjangkau lebih banyak responden</h3>
+      <p class="hint">Ajak rekan kerja mengisi survei ini.</p>
+      <button class="btn btn-wa" data-action="share-wa">Bagikan ke WhatsApp</button>
+      <button class="btn btn-ghost" data-action="copy-link" style="width:100%;margin-top:10px">Salin Pesan &amp; Link</button>
+    </div>
+
+    <div class="testmode" id="testPanel" style="display:none">
+      <b>🧪 Mode Uji aktif.</b> <span id="testMsg">URL Google Apps Script belum diisi, jadi jawaban disimpan di browser ini saja.</span>
+      <div style="margin-top:6px">Data tersimpan di browser ini: <b id="testCount">0</b> respons.</div>
+      <div class="row">
+        <button class="btn btn-ghost btn-sm" data-action="dl-csv">Download Data Uji (CSV)</button>
+        <button class="btn btn-ghost btn-sm" data-action="dl-xlsx">Download Data Uji (Excel)</button>
+        <button class="btn btn-ghost btn-sm" data-action="clear-test">Hapus Data Uji</button>
+      </div>
+    </div>
+
+    <p class="footer">Terima kasih sudah berpartisipasi. Jawaban Anda membantu riset Kelompok 4 MBA UGM.<br><a href="#" data-action="restart" style="color:var(--brand-2)">Isi ulang (khusus pengujian)</a></p>
+  </section>
+
+</main>
+
+<nav class="navbar" id="navbar" style="display:none">
+  <div class="navbar-in">
+    <button class="btn btn-ghost" id="btnBack">← Kembali</button>
+    <button class="btn btn-primary" id="btnNext">Lanjut →</button>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   KONFIGURASI: cukup ubah bagian ini
+   ===================================================================== */
+const CONFIG = {
+  // Tempel URL Web App Google Apps Script (akhiran /exec). Kosongkan = Mode Uji.
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwWvbX00brSFTJX6ykv5ykoW3e3l1Pz8EHF9lAN20q6jzELAyJQStmO7CoATvxAw4gG/exec",
+  // Link publik survei untuk tombol bagikan. Kosongkan = otomatis pakai alamat halaman ini.
+  SURVEY_URL: "https://nuralialmalik-lab.github.io/survei-ob-v2/",
+  // Batas tengah matriks 2x2 (titik tengah skala Likert 1-5).
+  CUTOFF: 3.0,
+  VERSION: "2.0"
+};
+
+/* =====================================================================
+   DATA PERTANYAAN (versi 2.0, sesuai Kuesioner_Survei_G4_Revisi.docx)
+   Nomor di layar 6-20 = kode data B1-B15
+   ===================================================================== */
+const PROFILE_QS = [
+  {id:"A1", title:"Di sektor apa tempat Anda bekerja saat ini?", opts:[
+    ["Swasta/korporasi","Swasta/korporasi"],["BUMN/BUMD","BUMN/BUMD"],["Pemerintahan/instansi","Pemerintahan/instansi"],
+    ["Startup/teknologi","Startup/teknologi"],["NGO/pendidikan/lainnya","NGO/pendidikan/lainnya"]]},
+  {id:"A2", title:"Berapa kira-kira jumlah karyawan di organisasi Anda?", opts:[
+    ["<50","Kurang dari 50"],["50-250","50-250"],["251-1000","251-1.000"],[">1000","Lebih dari 1.000"]]},
+  {id:"A3", title:"Bagaimana pola kerja Anda sehari-hari?", opts:[
+    ["WFO","WFO"],["Hybrid","Hybrid"],["Remote/virtual","Remote/virtual"]]},
+  {id:"A4", title:"Seperti apa bentuk ruang kerja utama Anda?", opts:[
+    ["Ruang terbuka/open-plan","Ruang terbuka/open-plan"],["Kubikel/semi-terbuka","Kubikel/semi-terbuka"],
+    ["Ruang tertutup","Ruang tertutup"],["Virtual/coworking/tidak ada kantor tetap","Virtual/coworking/tidak ada kantor tetap"]]},
+  {id:"A5", title:"Apa level jabatan Anda saat ini?", opts:[
+    ["Staf/pelaksana/officer","Staf/pelaksana/officer"],["Supervisor/koordinator/team lead","Supervisor/koordinator/team lead"],
+    ["Manajer/kepala bagian/eksekutif","Manajer/kepala bagian/eksekutif"],["Lainnya","Lainnya"]]}
+];
+
+const LIKERT_STEP2 = [
+  {group:"A. Desain Ruang Kerja (Office Design)", items:[
+    {id:"B1", text:"Tata ruang kerja saya memudahkan saya mengobrol atau berdiskusi spontan dengan rekan dari tim lain."},
+    {id:"B2", text:"Saat membutuhkan konsentrasi, saya dapat menemukan tempat kerja yang tenang dan minim gangguan suara atau lalu-lalang orang."},
+    {id:"B3", text:"Saya memiliki fleksibilitas untuk memilih tempat bekerja sesuai kebutuhan, misalnya ruang diskusi untuk kerja bersama atau ruang tenang untuk bekerja sendiri."}]},
+  {group:"B. Struktur Organisasi", items:[
+    {id:"B4", text:"Keputusan pekerjaan sehari-hari dapat diambil dengan cepat tanpa harus melewati terlalu banyak lapisan persetujuan."},
+    {id:"B5", text:"Saya dapat berkoordinasi langsung dengan rekan di divisi lain tanpa harus selalu melalui atasan."},
+    {id:"B6", text:"Tim saya diberi keleluasaan untuk menentukan cara kerja terbaik dalam mencapai target."},
+    {id:"B7", text:"Struktur organisasi dan pembagian tanggung jawab di tempat kerja saya mendukung pencapaian target organisasi secara efektif."}]}
+];
+const LIKERT_STEP3 = [
+  {group:"C. Kolaborasi dan Komunikasi", items:[
+    {id:"B8", text:"Informasi dan koordinasi antara tim saya dan tim lain berjalan lancar dan tepat waktu."},
+    {id:"B9", text:"Rekan-rekan di tempat kerja saling percaya dan bekerja sama, termasuk dengan orang dari divisi berbeda."},
+    {id:"B10", text:"Saat ada masalah yang melibatkan beberapa bagian, kami mencari solusi bersama, bukan saling melempar tanggung jawab."}]},
+  {group:"D. Budaya Kerja dan Dukungan Inovasi", items:[
+    {id:"B11", text:"Nilai-nilai dan perilaku kerja yang diharapkan disampaikan dengan jelas serta diterapkan secara konsisten oleh pimpinan."},
+    {id:"B12", text:"Organisasi saya memberikan kesempatan kepada karyawan untuk mencoba ide, metode, atau cara kerja baru guna meningkatkan hasil pekerjaan."}]},
+  {group:"E. Pembelajaran Organisasi (Learning Organization)", items:[
+    {id:"B13", text:"Rekan kerja di tempat saya terbiasa berbagi pengetahuan, informasi, atau cara kerja baru dengan tim lain."},
+    {id:"B14", text:"Ketika pekerjaan gagal atau terjadi kesalahan, kami membahasnya secara terbuka untuk mengambil pelajaran tanpa berfokus pada saling menyalahkan."},
+    {id:"B15", text:"Pengetahuan dan pengalaman kerja penting dicatat serta disimpan dengan rapi (misalnya SOP, notulen, atau folder bersama) sehingga mudah ditemukan."}]}
+];
+
+/* Deskripsi kuadran: deskriptif, bukan penilaian */
+const ZONES = {
+  Q1:{name:"Ekosistem Adaptif & Pembelajar", hex:"#1f7a6d",
+      desc:"Skor Ruang & Struktur dan skor Kolaborasi & Pembelajaran Anda sama-sama berada di atas titik netral. Anda menilai ruang dan struktur cukup mendukung, dan kerja sama serta pembelajaran di tempat kerja juga dinilai positif."},
+  Q2:{name:"Kolaborator Tangguh", hex:"#3b6fb6",
+      desc:"Skor Ruang & Struktur Anda berada di bawah titik netral, tetapi skor Kolaborasi & Pembelajaran berada di atas titik netral. Anda menilai kerja sama dan pembelajaran tetap berjalan, meskipun ruang atau struktur dirasa kurang mendukung."},
+  Q3:{name:"Ilusi Terbuka", hex:"#c9822b",
+      desc:"Skor Ruang & Struktur Anda berada di atas titik netral, tetapi skor Kolaborasi & Pembelajaran berada di bawah titik netral. Anda menilai ruang dan struktur cukup mendukung, tetapi kerja sama dan pembelajaran belum dirasakan sebaik itu."},
+  Q4:{name:"Silo Tradisional", hex:"#9a4a4a",
+      desc:"Skor Ruang & Struktur dan skor Kolaborasi & Pembelajaran Anda sama-sama berada di bawah titik netral. Anda menilai ruang dan struktur kurang mendukung, dan kerja sama serta pembelajaran juga belum dirasakan positif."}
+};
+
+/* Urutan kolom data. Harus sama dengan FIELDS di Code.gs */
+const FIELDS = ["timestamp","respondent_id","mode","durasi_detik","screening",
+  "A1_sektor","A2_skala","A3_pola_kerja","A4_desain_ruang","A5_level_jabatan",
+  "B1","B2","B3","B4","B5","B6","B7","B8","B9","B10","B11","B12","B13","B14","B15",
+  "D1_office_design","D2_struktur","D3_kolaborasi","D4_budaya_inovasi","D5_learning",
+  "skor_X","skor_Y","zona","tebakan_hambatan","tebakan_lainnya","dimensi_terendah","C1_jawaban_terbuka","versi","user_agent"];
+
+/* =====================================================================
+   STATE & UTIL
+   ===================================================================== */
+const state = { answers:{}, startedAt:null, current:"landing", history:[] };
+const ORDER = ["landing","screen","s1","s2","s3","s4","result"];
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+const surveyUrl = ()=> (CONFIG.SURVEY_URL || (location.origin + location.pathname)).trim();
+const round2 = n => Math.round(n*100)/100;
+const avg = arr => round2(arr.reduce((a,b)=>a+b,0)/arr.length);
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); return true; }catch(e){ return false; } }
+};
+let memTestRows = []; // cadangan jika localStorage tidak tersedia
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),2600); }
+function uid(){ return "R-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).slice(2,6).toUpperCase(); }
+
+/* =====================================================================
+   RENDER PERTANYAAN
+   ===================================================================== */
+function renderProfile(){
+  $("#s1-questions").innerHTML = PROFILE_QS.map((q,i)=>`
+    <div class="q" data-qid="${q.id}" data-type="radio">
+      <p class="q-title"><span class="q-num">${i+1}.</span> ${esc(q.title)}</p>
+      <div class="opts" data-name="${q.id}">
+        ${q.opts.map(o=>`<label class="opt"><input type="radio" name="${q.id}" value="${esc(o[0])}"><span class="dot"></span><span>${esc(o[1])}${o[2]?`<small>${esc(o[2])}</small>`:""}</span></label>`).join("")}
+      </div>
+    </div>`).join("");
+}
+function renderLikert(container, groups, startNum){
+  let n = startNum;
+  container.innerHTML = groups.map(g=>`
+    <div class="group-head">${esc(g.group)}</div>
+    ${g.items.map(it=>`
+      <div class="q" data-qid="${it.id}" data-type="likert">
+        <p class="q-title"><span class="q-num">${n++}.</span> ${esc(it.text)}</p>
+        <div class="likert" role="radiogroup" aria-label="${esc(it.text)}">
+          ${[1,2,3,4,5].map(v=>`<button type="button" class="lk" data-v="${v}" role="radio" aria-checked="false" aria-label="${v}">${v}</button>`).join("")}
+        </div>
+        <div class="lk-ends"><span>Sangat Tidak Setuju</span><span>Sangat Setuju</span></div>
+      </div>`).join("")}
+  `).join("");
+}
+
+/* =====================================================================
+   INTERAKSI JAWABAN
+   ===================================================================== */
+document.addEventListener("change", e=>{
+  const inp = e.target;
+  if(inp.type==="radio"){
+    const q = inp.closest(".q");
+    $$(".opt", q).forEach(l=>l.classList.toggle("sel", l.contains(inp)));
+    state.answers[inp.name] = inp.value;
+    q.classList.remove("missing"); q.classList.add("done");
+  }
+});
+document.addEventListener("click", e=>{
+  const lk = e.target.closest(".lk");
+  if(lk){
+    const q = lk.closest(".q");
+    $$(".lk", q).forEach(b=>{ const on=b===lk; b.classList.toggle("sel",on); b.setAttribute("aria-checked",on); });
+    state.answers[q.dataset.qid] = Number(lk.dataset.v);
+    q.classList.remove("missing"); q.classList.add("done");
+    // gulir otomatis ke pernyataan berikutnya yang belum dijawab
+    const view = q.closest(".view");
+    const next = $$('.q[data-type="likert"]', view).find(x=>!x.classList.contains("done"));
+    if(next) setTimeout(()=>next.scrollIntoView({behavior:"smooth",block:"center"}),180);
+    return;
+  }
+  const go = e.target.closest("[data-go]");
+  if(go){ e.preventDefault(); if(!state.startedAt) state.startedAt=Date.now(); show(go.dataset.go); return; }
+  const act = e.target.closest("[data-action]");
+  if(act){ e.preventDefault(); handleAction(act.dataset.action); }
+});
+$("#C1").addEventListener("input", e=>{ $("#c1count").textContent = e.target.value.length; });
+document.addEventListener("change", e=>{
+  if(e.target.name==="tebakan"){ const on = e.target.value==="Lainnya"; const t=$("#tebakanLain"); t.style.display = on ? "block" : "none"; if(on) t.focus(); }
+});
+$("#tebakanLain").addEventListener("input", ()=>{ if($("#tebakanLain").value.trim()) $('.q[data-qid="tebakan"]').classList.remove("missing"); });
+
+/* =====================================================================
+   NAVIGASI
+   ===================================================================== */
+function show(id){
+  $$(".view").forEach(v=>v.classList.remove("active"));
+  const v = $("#view-"+id); v.classList.add("active");
+  state.current = id;
+  const p = Number(v.dataset.progress||0);
+  $("#progressFill").style.width = p+"%"; $("#progressPct").textContent = p+"%";
+  const inFlow = ["screen","s1","s2","s3","s4"].includes(id);
+  $("#navbar").style.display = inFlow ? "block" : "none";
+  $("#btnNext").innerHTML = id==="s4" ? "Kirim &amp; Lihat Hasil ✓" : "Lanjut →";
+  window.scrollTo({top:0,behavior:"smooth"});
+  try{ history.replaceState(null,"","#"+id); }catch(e){}
+}
+function validate(viewId){
+  const view = $("#view-"+viewId);
+  const missing = $$(".q", view).filter(q=>!q.dataset.optional && state.answers[q.dataset.qid]===undefined);
+  if(viewId==="s4" && state.answers.tebakan==="Lainnya" && !$("#tebakanLain").value.trim()) missing.push($('.q[data-qid="tebakan"]'));
+  missing.forEach(q=>q.classList.add("missing"));
+  const err = $("#err-"+viewId);
+  if(err) err.classList.toggle("show", missing.length>0);
+  if(missing.length){ missing[0].scrollIntoView({behavior:"smooth",block:"center"}); return false; }
+  return true;
+}
+$("#btnBack").addEventListener("click", ()=>{
+  const i = ORDER.indexOf(state.current);
+  show(i<=1 ? "landing" : ORDER[i-1]);
+});
+$("#btnNext").addEventListener("click", ()=>{
+  const cur = state.current;
+  if(!validate(cur)) return;
+  if(cur==="screen"){
+    if(state.answers.screening==="Tidak"){ submitScreenout(); show("screenout"); }
+    else show("s1");
+    return;
+  }
+  if(cur==="s4"){ finish(); return; }
+  show(ORDER[ORDER.indexOf(cur)+1]);
+});
+
+/* =====================================================================
+   SKOR & ZONA
+   ===================================================================== */
+function computeScores(a){
+  const D1 = avg([a.B1,a.B2,a.B3]);            // Office Design (butir 6-8)
+  const D2 = avg([a.B4,a.B5,a.B6,a.B7]);       // Struktur (butir 9-12)
+  const D3 = avg([a.B8,a.B9,a.B10]);           // Kolaborasi (butir 13-15)
+  const D4 = avg([a.B11,a.B12]);               // Budaya & Inovasi (butir 16-17, eksploratif)
+  const D5 = avg([a.B13,a.B14,a.B15]);         // Learning (butir 18-20)
+  const X = avg([a.B1,a.B2,a.B3,a.B4,a.B5,a.B6,a.B7]);   // butir 6-12
+  const Y = avg([a.B8,a.B9,a.B10,a.B13,a.B14,a.B15]);    // butir 13-15 dan 18-20
+  const hiX = X >= CONFIG.CUTOFF, hiY = Y >= CONFIG.CUTOFF;
+  const key = hiX&&hiY ? "Q1" : (!hiX&&hiY ? "Q2" : (hiX&&!hiY ? "Q3" : "Q4"));
+  const dims = [["Office Design",D1],["Struktur Organisasi",D2],["Kolaborasi",D3],["Budaya & Inovasi",D4],["Learning Organization",D5]];
+  const lowest = dims.reduce((m,d)=>d[1]<m[1]?d:m, dims[0]);
+  return {D1,D2,D3,D4,D5,X,Y,key,lowest,dims};
+}
+
+/* =====================================================================
+   MATRIKS 2x2 (SVG)
+   ===================================================================== */
+function drawMatrix(X,Y,key){
+  const W=520,H=520,pad=58,size=W-pad-22, x0=pad, y0=18;
+  const sx = v => x0 + (v-1)/4*size;
+  const sy = v => y0 + (5-v)/4*size;
+  const cx = sx(CONFIG.CUTOFF), cy = sy(CONFIG.CUTOFF);
+  const qfill = k => key===k ? 0.20 : 0.07;
+  const z = ZONES;
+  const label = (x,y,t,k)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="14" font-weight="800" fill="${z[k].hex}">${t}</text>`;
+  const ticks = [1,2,3,4,5].map(v=>`
+    <text x="${sx(v)}" y="${y0+size+20}" text-anchor="middle" font-size="12" fill="#5b6b69">${v}</text>
+    <text x="${x0-12}" y="${sy(v)+4}" text-anchor="end" font-size="12" fill="#5b6b69">${v}</text>`).join("");
+  const px = sx(X), py = sy(Y);
+  $("#matrix").innerHTML = `
+  <svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Matriks 2x2 posisi ekosistem kerja Anda: X ${X}, Y ${Y}">
+    <rect x="${x0}" y="${y0}" width="${cx-x0}" height="${cy-y0}" fill="${z.Q2.hex}" fill-opacity="${qfill('Q2')}"/>
+    <rect x="${cx}" y="${y0}" width="${x0+size-cx}" height="${cy-y0}" fill="${z.Q1.hex}" fill-opacity="${qfill('Q1')}"/>
+    <rect x="${x0}" y="${cy}" width="${cx-x0}" height="${y0+size-cy}" fill="${z.Q4.hex}" fill-opacity="${qfill('Q4')}"/>
+    <rect x="${cx}" y="${cy}" width="${x0+size-cx}" height="${y0+size-cy}" fill="${z.Q3.hex}" fill-opacity="${qfill('Q3')}"/>
+    <rect x="${x0}" y="${y0}" width="${size}" height="${size}" fill="none" stroke="#c9d3d0" stroke-width="1.5"/>
+    <line x1="${cx}" y1="${y0}" x2="${cx}" y2="${y0+size}" stroke="#93a5a1" stroke-dasharray="5 5"/>
+    <line x1="${x0}" y1="${cy}" x2="${x0+size}" y2="${cy}" stroke="#93a5a1" stroke-dasharray="5 5"/>
+    ${label((x0+cx)/2, y0+26, "Kolaborator Tangguh","Q2")}
+    ${label((cx+x0+size)/2, y0+26, "Adaptif & Pembelajar","Q1")}
+    ${label((x0+cx)/2, y0+size-14, "Silo Tradisional","Q4")}
+    ${label((cx+x0+size)/2, y0+size-14, "Ilusi Terbuka","Q3")}
+    ${ticks}
+    <text x="${x0+size/2}" y="${y0+size+44}" text-anchor="middle" font-size="13" font-weight="700" fill="#14201f">X · Ruang &amp; Struktur (butir 6-12): rendah → tinggi</text>
+    <text transform="translate(16 ${y0+size/2}) rotate(-90)" text-anchor="middle" font-size="13" font-weight="700" fill="#14201f">Y · Kolaborasi &amp; Pembelajaran: rendah → tinggi</text>
+    <g>
+      <circle cx="${px}" cy="${py}" r="22" fill="${z[key].hex}" fill-opacity=".18">
+        <animate attributeName="r" values="14;26;14" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="${px}" cy="${py}" r="10" fill="${z[key].hex}" stroke="#fff" stroke-width="3"/>
+      <text x="${px}" y="${py - 18 < y0+14 ? py+30 : py-18}" text-anchor="middle" font-size="12.5" font-weight="800" fill="#14201f">Anda (${X.toFixed(2)}; ${Y.toFixed(2)})</text>
+    </g>
+  </svg>`;
+}
+
+/* =====================================================================
+   HASIL
+   ===================================================================== */
+function renderResult(row, s){
+  const z = ZONES[s.key];
+  $("#resTitle").textContent = "Posisi Anda: " + z.name;
+  const chip = $("#resChip"); chip.textContent = `X ${s.X.toFixed(2)} · Y ${s.Y.toFixed(2)}`; chip.style.background = z.hex;
+  $("#resDesc").textContent = z.desc;
+  $("#cutLbl").textContent = CONFIG.CUTOFF.toFixed(1);
+  drawMatrix(s.X, s.Y, s.key);
+  const lbl = {"Office Design":"Office Design (butir 6-8)","Struktur Organisasi":"Struktur Organisasi (butir 9-12)","Kolaborasi":"Kolaborasi & Komunikasi (butir 13-15)","Budaya & Inovasi":"Budaya Kerja & Dukungan Inovasi (butir 16-17)*","Learning Organization":"Learning Organization (butir 18-20)"};
+  $("#scoreBars").innerHTML = s.dims.map(d=>`
+    <div class="bar-row"><div class="lbl"><span>${lbl[d[0]]}</span><span>${d[1].toFixed(2)}</span></div>
+    <div class="bar"><span data-w="${(d[1]-1)/4*100}"></span></div></div>`).join("") +
+    `<p class="muted" style="font-size:12.5px;margin:4px 0 0">*Indikator eksploratif, bukan skala budaya atau inovasi yang tervalidasi.</p>`;
+  requestAnimationFrame(()=>setTimeout(()=>$$("#scoreBars .bar>span").forEach(el=>el.style.width=el.dataset.w+"%"),60));
+  const guess = state.answers.tebakan === "Lainnya" ? `Lainnya: ${($("#tebakanLain").value||"").trim()}` : state.answers.tebakan;
+  $("#insightBox").innerHTML = `<b>Hambatan inovasi yang Anda pilih:</b> ${esc(guess)}.<br>Dimensi dengan skor terendah dari jawaban Anda: <b>${esc(s.lowest[0])}</b> (${s.lowest[1].toFixed(2)}). Keduanya bisa sama atau berbeda. Perbedaan itu menjadi bahan diskusi dalam analisis kelompok.`;
+}
+
+/* =====================================================================
+   PENGIRIMAN DATA
+   ===================================================================== */
+function buildRow(){
+  const a = state.answers, s = computeScores(a);
+  const row = {
+    timestamp: new Date().toISOString(),
+    respondent_id: uid(),
+    mode: CONFIG.SCRIPT_URL ? "live" : "uji",
+    durasi_detik: state.startedAt ? Math.round((Date.now()-state.startedAt)/1000) : "",
+    screening: a.screening,
+    A1_sektor:a.A1, A2_skala:a.A2, A3_pola_kerja:a.A3, A4_desain_ruang:a.A4, A5_level_jabatan:a.A5,
+    D1_office_design:s.D1, D2_struktur:s.D2, D3_kolaborasi:s.D3, D4_budaya_inovasi:s.D4, D5_learning:s.D5,
+    skor_X:s.X, skor_Y:s.Y, zona:ZONES[s.key].name,
+    tebakan_hambatan:a.tebakan, tebakan_lainnya: a.tebakan==="Lainnya" ? ($("#tebakanLain").value||"").trim() : "",
+    dimensi_terendah:s.lowest[0],
+    C1_jawaban_terbuka: ($("#C1").value||"").trim(),
+    versi: CONFIG.VERSION, user_agent: navigator.userAgent.slice(0,180)
+  };
+  for(let i=1;i<=15;i++) row["B"+i] = a["B"+i];
+  return {row, s};
+}
+async function postToSheet(payload){
+  if(!CONFIG.SCRIPT_URL) return {ok:false, reason:"no-url"};
+  try{
+    // text/plain + no-cors: menghindari preflight CORS ke Apps Script
+    await fetch(CONFIG.SCRIPT_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(payload)});
+    return {ok:true};
+  }catch(err){ return {ok:false, reason:"network"}; }
+}
+function saveTestRow(row){
+  const rows = store.get("g4_test_rows_v2", null);
+  if(rows===null && !store.set("g4_test_rows_v2",[])){ memTestRows.push(row); return; }
+  const list = store.get("g4_test_rows_v2", []); list.push(row);
+  if(!store.set("g4_test_rows_v2", list)) memTestRows.push(row);
+}
+function getTestRows(){ return store.get("g4_test_rows_v2", []).concat(memTestRows); }
+
+async function finish(){
+  if($("#website").value){ show("result"); return; } // honeypot: bot
+  const btn = $("#btnNext"); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Mengirim...';
+  const {row, s} = buildRow();
+  const res = await postToSheet({type:"response", data:row});
+  btn.disabled = false;
+  renderResult(row, s);
+  store.set("g4_last_zone", ZONES[s.key].name);
+  const panel = $("#testPanel");
+  if(!res.ok){
+    saveTestRow(row);
+    panel.style.display = "block";
+    $("#testMsg").textContent = res.reason==="no-url"
+      ? "URL Google Apps Script belum diisi, jadi jawaban disimpan di browser ini saja."
+      : "Koneksi ke Google Sheets gagal. Jawaban disimpan sementara di browser ini. Silakan unduh dan kirim ke tim peneliti.";
+    $("#testCount").textContent = getTestRows().length;
+  } else {
+    panel.style.display = "none";
+  }
+  show("result");
+}
+function submitScreenout(){
+  const payload = {type:"screenout", data:{timestamp:new Date().toISOString(), screening:"Tidak", versi:CONFIG.VERSION}};
+  postToSheet(payload);
+}
+
+/* =====================================================================
+   SHARE & DOWNLOAD
+   ===================================================================== */
+function shareText(){
+  const zone = store.get("g4_last_zone", null);
+  const hook = zone && state.current==="result" ? `Hasil saya: *${zone}*. Kamu masuk kuadran yang mana? ` : "";
+  return `Halo! Bantu tugas riset MBA UGM Kelompok 4 ya 🙏\n\nSurvei singkat (±5 menit, anonim) soal ruang kerja, struktur organisasi, budaya kerja, kolaborasi, dan pembelajaran di kantor. Di akhir langsung keluar ringkasan jawaban dalam matriks 2x2. ${hook}\n\nIsi di sini: ${surveyUrl()}`;
+}
+async function copyText(t){
+  try{ await navigator.clipboard.writeText(t); return true; }
+  catch(e){
+    const ta=document.createElement("textarea"); ta.value=t; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(_){}
+    ta.remove(); return ok;
+  }
+}
+function toCSV(rows){
+  const q = v => { v = v===undefined||v===null ? "" : String(v); return /[",\n;]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; };
+  return "﻿" + [FIELDS.join(","), ...rows.map(r=>FIELDS.map(f=>q(r[f])).join(","))].join("\r\n");
+}
+function download(blob, name){
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name;
+  document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500);
+}
+function loadSheetJS(){
+  return new Promise((res,rej)=>{
+    if(window.XLSX) return res(window.XLSX);
+    const s=document.createElement("script"); s.src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js";
+    s.onload=()=>res(window.XLSX); s.onerror=rej; document.head.appendChild(s);
+  });
+}
+async function handleAction(act){
+  const stamp = new Date().toISOString().slice(0,10);
+  if(act==="share-wa"){
+    const t = shareText(); await copyText(t);
+    window.open("https://wa.me/?text="+encodeURIComponent(t), "_blank", "noopener");
+    toast("Pesan ajakan disalin & WhatsApp dibuka");
+  }
+  if(act==="copy-link"){ (await copyText(shareText())) ? toast("Pesan & link survei disalin") : toast("Gagal menyalin. Salin manual: "+surveyUrl()); }
+  if(act==="dl-csv"){
+    const rows=getTestRows(); if(!rows.length) return toast("Belum ada data uji");
+    download(new Blob([toCSV(rows)],{type:"text/csv;charset=utf-8"}), `data_uji_survei_G4_${stamp}.csv`);
+  }
+  if(act==="dl-xlsx"){
+    const rows=getTestRows(); if(!rows.length) return toast("Belum ada data uji");
+    try{
+      const XLSX = await loadSheetJS();
+      const ws = XLSX.utils.json_to_sheet(rows.map(r=>Object.fromEntries(FIELDS.map(f=>[f, r[f]===undefined?"":r[f]]))), {header:FIELDS});
+      const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Responses");
+      XLSX.writeFile(wb, `data_uji_survei_G4_${stamp}.xlsx`);
+    }catch(e){
+      toast("Library Excel gagal dimuat. File CSV diunduh sebagai gantinya.");
+      download(new Blob([toCSV(rows)],{type:"text/csv;charset=utf-8"}), `data_uji_survei_G4_${stamp}.csv`);
+    }
+  }
+  if(act==="clear-test"){
+    if(confirm("Hapus semua data uji yang tersimpan di browser ini?")){ store.set("g4_test_rows_v2",[]); memTestRows=[]; $("#testCount").textContent="0"; toast("Data uji dihapus"); }
+  }
+  if(act==="restart"){ location.hash=""; location.reload(); }
+}
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+renderProfile();
+renderLikert($("#s2-questions"), LIKERT_STEP2, 6);
+renderLikert($("#s3-questions"), LIKERT_STEP3, 13);
+show("landing");
+</script>
+</body>
+</html>
